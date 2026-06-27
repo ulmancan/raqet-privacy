@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hesap Silme — Raqet House</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #000;
+      color: #f5f5f7;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      padding: 24px 32px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-mark {
+      width: 36px; height: 36px;
+      background: #CCFF00;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 900; font-size: 16px; color: #000;
+    }
+
+    .logo-text { font-weight: 700; font-size: 17px; letter-spacing: -0.02em; }
+
+    .lang-switcher { display: flex; gap: 8px; margin-left: auto; }
+
+    .lang-btn {
+      font-size: 12px; font-weight: 600;
+      padding: 5px 12px; border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: transparent; color: #6e6e73;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .lang-btn.active {
+      background: rgba(255,255,255,0.08);
+      color: #f5f5f7;
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    main {
+      flex: 1;
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 64px 32px 80px;
+      width: 100%;
+    }
+
+    .tag {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: #CCFF00; margin-bottom: 20px;
+      display: block;
+    }
+
+    h1 {
+      font-size: clamp(28px, 6vw, 44px);
+      font-weight: 800; letter-spacing: -0.03em;
+      line-height: 1.1; margin-bottom: 16px;
+    }
+
+    .subtitle {
+      font-size: 16px; color: #6e6e73;
+      line-height: 1.6; margin-bottom: 40px;
+    }
+
+    h2 {
+      font-size: 17px; font-weight: 700;
+      color: #f5f5f7; margin: 32px 0 14px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 18px;
+      padding: 24px 28px;
+      margin-bottom: 14px;
+    }
+
+    .steps {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 14px;
+    }
+
+    .steps li {
+      display: flex; align-items: flex-start; gap: 14px;
+      font-size: 15px; color: #a1a1a6; line-height: 1.5;
+    }
+
+    .step-num {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(204,255,0,0.1);
+      border: 1px solid rgba(204,255,0,0.25);
+      color: #CCFF00; font-size: 12px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; margin-top: 1px;
+    }
+
+    .email-link {
+      color: #CCFF00; text-decoration: none; font-weight: 600;
+    }
+    .email-link:hover { text-decoration: underline; }
+
+    .email-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: #CCFF00; color: #000;
+      font-weight: 700; font-size: 15px;
+      padding: 13px 26px; border-radius: 100px;
+      text-decoration: none; margin-top: 20px;
+      transition: opacity 0.2s;
+    }
+    .email-btn:hover { opacity: 0.85; }
+
+    .data-list {
+      list-style: none;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .data-list li {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 14px; color: #a1a1a6;
+    }
+    .data-list li::before {
+      content: '';
+      width: 5px; height: 5px; border-radius: 50%;
+      background: rgba(255,255,255,0.2); flex-shrink: 0;
+    }
+
+    .warning {
+      background: rgba(255,80,80,0.06);
+      border: 1px solid rgba(255,80,80,0.18);
+      border-radius: 14px; padding: 16px 20px;
+      margin-top: 24px;
+    }
+    .warning strong { color: #ff6b6b; font-size: 13px; display: block; margin-bottom: 6px; }
+    .warning p { font-size: 14px; color: #a1a1a6; line-height: 1.5; }
+
+    .divider {
+      border: none;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      margin: 36px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 32px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      font-size: 12px; color: #3a3a3c;
+    }
+
+    @media (max-width: 600px) {
+      main { padding: 40px 20px 60px; }
+      header { padding: 18px 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-mark">R</div>
+  <span class="logo-text">Raqet House</span>
+  <div class="lang-switcher">
+    <button class="lang-btn active" onclick="setLang('tr')">TR</button>
+    <button class="lang-btn" onclick="setLang('en')">EN</button>
+  </div>
+</header>
+
+<main>
+
+  <!-- TÜRKÇE -->
+  <div id="tr">
+    <span class="tag">Hesap Yönetimi</span>
+    <h1>Hesap Silme Talebi</h1>
+    <p class="subtitle">Raqet House uygulamasından hesabınızı ve ilgili tüm verilerinizi silmek için aşağıdaki adımları izleyin.</p>
+
+    <h2>Uygulama İçinden Silme</h2>
+    <div class="card">
+      <ul class="steps">
+        <li><span class="step-num">1</span>Uygulamayı açın ve Profil ekranına gidin.</li>
+        <li><span class="step-num">2</span>Sol üst köşedeki ⚙ Ayarlar ikonuna dokunun.</li>
+        <li><span class="step-num">3</span><span><strong style="color:#f5f5f7">"Hesabı Sil"</strong> seçeneğini seçin ve onaylayın.</span></li>
+      </ul>
+    </div>
+
+    <h2>E-posta ile Talep</h2>
+    <div class="card">
+      <p style="font-size:15px;color:#a1a1a6;line-height:1.6;margin-bottom:4px;">
+        Uygulama içinden silemiyorsanız aşağıdaki adrese e-posta gönderin:
+      </p>
+      <p style="margin-top:14px;">
+        <a class="email-link" href="mailto:info@raqet.com.tr">📧 info@raqet.com.tr</a>
+      </p>
+      <p style="font-size:14px;color:#6e6e73;margin-top:12px;line-height:1.6;">
+        E-postanızda hesabınıza kayıtlı e-posta adresini belirtin. Talebiniz <strong style="color:#f5f5f7">7 iş günü</strong> içinde işleme alınır.
+      </p>
+      <a class="email-btn" href="mailto:info@raqet.com.tr?subject=Hesap%20Silme%20Talebi">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Hesap Silme Talebi Gönder
+      </a>
+    </div>
+
+    <h2>Silinen Veriler</h2>
+    <div class="card">
+      <ul class="data-list">
+        <li>Ad, soyad ve profil fotoğrafı</li>
+        <li>E-posta adresi ve oturum bilgileri</li>
+        <li>Maç geçmişi ve istatistikler</li>
+        <li>Rezervasyon ve turnuva kayıtları</li>
+        <li>Takipçi / takip edilen ilişkileri</li>
+        <li>Topluluk gönderileri</li>
+      </ul>
+    </div>
+
+    <div class="warning">
+      <strong>⚠ Bu işlem geri alınamaz</strong>
+      <p>Hesabınız silindikten sonra tüm verilerinize erişim kalıcı olarak kaybedilir.</p>
+    </div>
+  </div>
+
+  <!-- ENGLISH -->
+  <div id="en" style="display:none">
+    <span class="tag">Account Management</span>
+    <h1>Account Deletion Request</h1>
+    <p class="subtitle">Follow the steps below to delete your Raqet House account and all associated data.</p>
+
+    <h2>Delete via the App</h2>
+    <div class="card">
+      <ul class="steps">
+        <li><span class="step-num">1</span>Open the app and go to your Profile screen.</li>
+        <li><span class="step-num">2</span>Tap the ⚙ Settings icon in the top left corner.</li>
+        <li><span class="step-num">3</span><span>Select <strong style="color:#f5f5f7">"Delete Account"</strong> and confirm.</span></li>
+      </ul>
+    </div>
+
+    <h2>Request via Email</h2>
+    <div class="card">
+      <p style="font-size:15px;color:#a1a1a6;line-height:1.6;margin-bottom:4px;">
+        If you cannot delete from within the app, send an email to:
+      </p>
+      <p style="margin-top:14px;">
+        <a class="email-link" href="mailto:info@raqet.com.tr">📧 info@raqet.com.tr</a>
+      </p>
+      <p style="font-size:14px;color:#6e6e73;margin-top:12px;line-height:1.6;">
+        Include your registered email address in the message. Your request will be processed within <strong style="color:#f5f5f7">7 business days</strong>.
+      </p>
+      <a class="email-btn" href="mailto:info@raqet.com.tr?subject=Account%20Deletion%20Request">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        Send Account Deletion Request
+      </a>
+    </div>
+
+    <h2>Data That Will Be Deleted</h2>
+    <div class="card">
+      <ul class="data-list">
+        <li>Name, surname and profile photo</li>
+        <li>Email address and session data</li>
+        <li>Match history and statistics</li>
+        <li>Booking and tournament records</li>
+        <li>Follower / following relationships</li>
+        <li>Community posts</li>
+      </ul>
+    </div>
+
+    <div class="warning">
+      <strong>⚠ This action cannot be undone</strong>
+      <p>Once your account is deleted, access to all your data is permanently lost.</p>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  © 2026 Nexora Labs Yazılım ve Danışmanlık Limited Şirketi &nbsp;·&nbsp; info@raqet.com.tr
+</footer>
+
+<script>
+  function setLang(lang) {
+    document.getElementById('tr').style.display = lang === 'tr' ? 'block' : 'none';
+    document.getElementById('en').style.display = lang === 'en' ? 'block' : 'none';
+    document.querySelectorAll('.lang-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.textContent === lang.toUpperCase());
+    });
+  }
+</script>
+
+</body>
+</html>
